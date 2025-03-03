@@ -1,0 +1,82 @@
+<div class="container">
+    <div style="display: flex; gap:20px;">
+        <div style="flex: 1;">
+            <h2>Categories</h2>
+            <table *ngIf="categories.length > 0; else noCategories" class="styled-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let category of categories">
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.description }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <ng-template #noCategories>
+                <p>No categories available.</p>
+              </ng-template>
+        </div>  
+        <div style="flex: 1; padding-right: 20px;">
+            <h2>Add Category</h2>
+            <form [formGroup]="categoryForm" (ngSubmit)="addCategory()">
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" placeholder="Name" formControlName="name"/>
+                    <mat-error *ngIf="categoryForm.get('name')?.hasError('required')">This Input is required !</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Description</mat-label>
+                    <input matInput type="text" placeholder="Description" formControlName="description"/>
+                    <mat-error *ngIf="categoryForm.get('description')?.hasError('required')">This Input is required !</mat-error>
+                </mat-form-field>
+                <button mat-raised-button='primary' type="submit">Add Category</button>
+            </form>
+        </div>
+        
+    </div>
+</div>
+
+<style>
+    .styled-table {
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 0.9em;
+      font-family: sans-serif;
+      min-width: 400px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      width: 100%;
+    }
+  
+    .styled-table thead tr {
+      background-color: #3f51b5;
+      color: #ffffff;
+      text-align: left;
+    }
+  
+    .styled-table th,
+    .styled-table td {
+      padding: 12px 15px;
+    }
+  
+    .styled-table tbody tr {
+      border-bottom: 1px solid #dddddd;
+    }
+  
+    .styled-table tbody tr:nth-of-type(even) {
+      background-color: #f3f3f3;
+    }
+  
+    .styled-table tbody tr:last-of-type {
+      border-bottom: 2px solid #3f51b5;
+    }
+  
+    .styled-table tbody tr.active-row {
+      font-weight: bold;
+      color: #3f51b5;
+    }
+  </style>
